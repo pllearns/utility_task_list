@@ -16,7 +16,9 @@ What you will be able to do with this app:
 
 Specs:
 
-- [ ] Visitors can sign up / sign in / sign out
+- [ ] Visitors can sign up / sign in / sign out with oauth
+- [ ] User Profile that contains a gravatar and goals.
+- [ ] Work/Personal Todo Lists 
 - [ ] A logged in user can CRUD `todo list` items
 - [ ] A logged in user can `complete` and `uncomplete` a `todo list` item.
 - [ ] A logged in user can sort their `todo list` items
@@ -28,3 +30,6 @@ Specs:
 - [ ] Deploy the app to heroku
 
 How to get Started: 
+
+#Quality Rubric
+
