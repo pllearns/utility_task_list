@@ -17,7 +17,7 @@ What you will be able to do with this app:
 Specs:
 
 - [ ] Visitors can sign up / sign in / sign out with oauth
-- [ ] User Profile that contains a gravatar and goals.
+- [ ] User Profile that contains a gravatar and goals/bio.
 - [ ] Work/Personal Todo Lists 
 - [ ] A logged in user can CRUD `todo list` items
 - [ ] A logged in user can `complete` and `uncomplete` a `todo list` item.
@@ -31,5 +31,14 @@ Specs:
 
 How to get Started: 
 
-#Quality Rubric
+# Quality Rubric
 
+- [ ] No JSHint errors
+- [ ] Tested - All specs passing
+- [ ] Documented - Contains instructions for a user to set up app locally
+- [ ] Functional - Project runs in localhost
+- [ ] Structured - Directory structure allows new developers to quickly find and add files
+- [ ] Clearly Named - `Functions`, `variables`, `files`, `CSS classes` and little to no `ids`
+- [ ] Abstracted - Small, single-responsibility functions leveraged for encapsulation & reusability
+- [ ] Git Logged - Readable and clean with clear, complete, professional commit messages
+- [ ] Not Commented - Unless truly necessary. No dead code, console.logs, fits/xits
