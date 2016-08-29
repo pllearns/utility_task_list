@@ -16,7 +16,7 @@ What you will be able to do with this app:
 
 Specs:
 
-- [ ] Visitors can sign up / sign in / sign out with oauth
+- [ ] Visitors can sign up / sign in / sign out.
 - [ ] User Profile that contains a gravatar and goals/bio.
 - [ ] Work/Personal Todo Lists 
 - [ ] A logged in user can CRUD `todo list` items
