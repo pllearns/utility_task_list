@@ -24,6 +24,7 @@ Specs:
 - [ ] A logged in user can sort their `todo list` items
 - [ ] Has unoffensive and darn near attactive layout / design / style.
 - [ ] Follow good Git team behaviors (do all your work on branches & submit pull requests for review before merging to master)
+- [ ] Use `es2016` JavaScript Syntax with `babel`
 - [ ] Use `Postgresql`
 - [ ] Use `node` and `express`
 - [ ] The artifact produced is properly licensed, preferably with the MIT license.
