@@ -12,7 +12,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register",
     "buildwatch": "babel src -w --out-dir dist --copy-files",
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "repository": {
     "type": "git",
