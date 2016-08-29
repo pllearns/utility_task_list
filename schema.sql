@@ -16,16 +16,6 @@ CREATE TABLE personal_tasks (
   task VARCHAR(255) NOT NULL,
   sub_task VARCHAR(255),
   due_date TIMESTAMP NOT NULL DEFAULT now(),
-  is_important BOOLEAN DEFAULT false
-);
-
-DROP TABLE IF EXISTS work_tasks;
-
-CREATE TABLE work_tasks (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL,
-  task VARCHAR(255) NOT NULL,
-  sub_task VARCHAR(255),
-  due_date TIMESTAMP NOT NULL DEFAULT now(),
-  is_important BOOLEAN DEFAULT false
+  is_important BOOLEAN DEFAULT false,
+  is_work BOOLEAN DEFAULT false
 );

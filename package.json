@@ -12,7 +12,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register",
     "buildwatch": "babel src -w --out-dir dist --copy-files",
-    "start": "nodemon ./bin/www"
+    "start-dev": "nodemon",
+    "start": "node dist/app.js"
   },
   "repository": {
     "type": "git",
