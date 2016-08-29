@@ -28,6 +28,25 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(cookieSession( {
+  name: 'session',
+  keys: [
+    '',
+    ''
+  ]
+}))
+app.use((req, res) => {
+  req.loggedIn = !!req.session.userId
+  req.getCurrentUser = getCurrentUser
+  next()
+})
+const getCurrentUser() => {
+  if (this.loggedIn) {
+    return db.getUserById(this.session.userId)
+  }else{
+    return Promise.resolve(null)
+  }
+}
 
 app.use('/', routes);
 app.use('/users', users)
