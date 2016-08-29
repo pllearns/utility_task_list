@@ -1,0 +1,24 @@
+{
+  "name": "utility_task_list",
+  "version": "1.0.0",
+  "description": "A task management app",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pllearns/utility_task_list.git"
+  },
+  "keywords": [
+    "tasks",
+    "goals",
+    "lists"
+  ],
+  "author": "Harman Singh and Phillip Lorenzo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pllearns/utility_task_list/issues"
+  },
+  "homepage": "https://github.com/pllearns/utility_task_list#readme"
+}
