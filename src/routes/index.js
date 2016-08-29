@@ -4,8 +4,44 @@ var router = express.Router()
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' })
+  if(!req.loggedIn){
+  res.render('index', { title: 'Express' });
+  return;
 })
+
+router.get('/login', = (req,res) => {
+  res.render('login', {
+    error: 'Please Log In'
+  })
+})
+
+router.get('/signup', = (req,res) => {
+  res.render('signup',{
+    email: ''
+  })
+})
+
+router.post('/login', = (req,res) => {
+  const email = req.body.email
+  const password = req.body.password
+  db.authenticateUser(email, password)
+    .then(userId => {
+      if(userId){
+        req.session.userId = userId
+        res.redirect('/')
+      }else{
+        res.render('login', {
+          error: 'Email or Password Not Found'
+        })
+      }
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
+})
+
 
 
 

@@ -31,8 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieSession( {
   name: 'session',
   keys: [
-    '',
-    ''
+    'd96a5bad00f0f5bbfa7fa03ba42bab02a229ebd69',
+    '09b75924af0e502cd1fad019ac6efdade87971019'
   ]
 }))
 app.use((req, res) => {
@@ -40,7 +40,8 @@ app.use((req, res) => {
   req.getCurrentUser = getCurrentUser
   next()
 })
-const getCurrentUser() => {
+
+const getCurrentUser = () => {
   if (this.loggedIn) {
     return db.getUserById(this.session.userId)
   }else{

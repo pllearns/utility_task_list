@@ -1,7 +1,7 @@
 INSERT INTO
   users (email, encrypted_password)
 VALUES
-  ('bob@bob.com', '');
+  ('bob@bob.com', '$2a$06$IXZlu18nkWvuCY8aRLixLu6msCgx1q2kWxuiUY7fCTMAceEflcXwe');
 
 INSERT INTO
   personal_tasks (user_id, task, sub_task, due_date, is_important, is_work)
