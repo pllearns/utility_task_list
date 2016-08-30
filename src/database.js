@@ -62,6 +62,21 @@ const createTask = (attributes) => {
   return db.one(sql, variables)
 }
 
+const getAllTasksByUserId = (userId) => {
+  const sql = `
+  SELECT
+    *
+  FROM
+    tasks
+  WHERE
+    user_id=$1
+  ORDER BY
+    created_at ASC,
+    id DESC
+  `
+  const variables = [userId]
+  return db.manyOrNone(sql, variables)
+}
 
 
 module.exports = {
@@ -70,5 +85,6 @@ module.exports = {
   authenticateUser: authenticateUser,
   createUser: createUser,
   getUserById: getUserById,
-  createTask: createTask
+  createTask: createTask,
+  getAllTasksByUserId: getAllTasksByUserId
 }

@@ -2,25 +2,34 @@ var express = require('express')
 var router = express.Router()
 var users = require('./users')
 var database = require('../database')
+var moment = require('moment')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  req.getCurrentUser()
-    .then(currentUser => {
-      if (currentUser){
+    Promise.all([
+    req.getCurrentUser(),
+    database.getAllTasksByUserId(req.session.userId)
+    ])
+      .then(results => {
+        const currentUser = results[0]
+        const tasks = results[1]
         res.render('profile', {
-          currentUser: currentUser
-        })
-      }else{
-        res.render('index')
-      }
-    })
-    .catch(error => {
-      res.render('error', {
-        error: error,
+            currentUser: currentUser,
+            tasks: tasks,
+            newTask: {},
+            humanizeDate: humanizeDate
+          })
       })
-    })
+      .catch(error => {
+        res.render('error', {
+          error: error,
+        })
+      })
 })
+
+const humanizeDate = (date) => {
+  return moment(date).format('MMM Do YY')
+}
 
 router.get('/login', (req,res) => {
   res.render('login')
@@ -76,6 +85,21 @@ router.post('/signup', (req,res) => {
           })
         })
     }
+})
+
+router.post('/tasks', (req,res) => {
+  var task = req.body.task
+  task.userId = req.session.userId
+  database.createTask(task)
+    .then(task => {
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('new_task_form', {
+        error: error,
+        newTask: task,
+      })
+    })
 })
 
 router.get('/logout', (req,res) => {

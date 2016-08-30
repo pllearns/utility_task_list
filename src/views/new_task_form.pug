@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1 Tasking It
+  if error
+    h2= error
+  include ./_new_task_form
