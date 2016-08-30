@@ -42,10 +42,31 @@ const authenticateUser  = (email, password) => {
     })
 }
 
+const createTask = (attributes) => {
+  const sql = `
+  INSERT INTO
+    personal_tasks (user_id, task, sub_task, due_date, is_important, is_work )
+  VALUES
+    ($1, $2, $3, $4, $5, $6)
+  RETURNING
+    *
+  `
+  const variables = [
+    attributes.userId,
+    attributes.task,
+    attributes.sub_task,
+    attributes.due_date,
+    attributes.is_important,
+    attributes.is_work,
+  ]
+  return db.one(sql, variables)
+}
+
 module.exports = {
   pgp: pgp,
   db: db,
   authenticateUser: authenticateUser,
   createUser: createUser,
-  getUserById: getUserById
+  getUserById: getUserById,
+  createTask: createTask
 }
