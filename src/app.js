@@ -7,6 +7,7 @@ var cookieSession = require('cookie-session')
 var bodyParser = require('body-parser')
 var database = require('./database')
 var routes = require('./routes')
+var connect = require('connect')
 
 var app = express()
 
@@ -14,6 +15,7 @@ app.get('env') === process.env.NODE_ENV || 'development'
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
+app.set('trust proxy', 1)
 
 app.set('port', (process.env.PORT || 3000))
 
@@ -21,7 +23,7 @@ app.set('port', (process.env.PORT || 3000))
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieSession({
@@ -39,13 +41,17 @@ app.use((req, res, next) => {
 
 const getCurrentUser = () => {
   if (this.loggedIn) {
-    return db.getUserById(this.session.userId)
+    return database.getUserById(this.session.userId)
   }else{
     return Promise.resolve(null)
   }
 }
 
-app.use('/', routes);
+app.use('/', routes)
+app.use('/users', routes)
+
+app.get('/signup', routes)
+app.post('/signup', routes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

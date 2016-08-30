@@ -1,13 +1,13 @@
 var express = require('express')
 var router = express.Router()
 var users = require('./users')
-// var db = require('./database')
+var database = require('../database')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
 
   res.render('index', {
-    title: 'Tasker'
+    title: 'Welcome to Tasker'
   })
   return;
 })
@@ -27,7 +27,7 @@ router.get('/signup', (req,res) => {
 router.post('/login', (req,res) => {
   const email = req.body.email
   const password = req.body.password
-  db.authenticateUser(email, password)
+  database.authenticateUser(email, password)
     .then(userId => {
       if(userId){
         req.session.userId = userId
@@ -56,7 +56,7 @@ router.post('/signup', (req,res) => {
         email: email,
       })
     } else{
-      db.createUser(attributes)
+      database.createUser(attributes)
         .then(user => {
           req.session.userId = user.id
           res.redirect('/')
