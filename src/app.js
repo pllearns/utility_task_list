@@ -8,6 +8,7 @@ var bodyParser = require('body-parser')
 var database = require('./database')
 var routes = require('./routes')
 var connect = require('connect')
+var gravatar = require('gravatar')
 
 var app = express()
 
@@ -42,6 +43,10 @@ app.use((req, res, next) => {
 const getCurrentUser = () => {
   if (this.loggedIn) {
     return database.getUserById(this.session.userId)
+      .then(user => {
+        user.profile_url = gravatar.profile_url(user.email)
+        return user
+      })
   }else{
     return Promise.resolve(null)
   }

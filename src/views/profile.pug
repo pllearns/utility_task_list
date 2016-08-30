@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  if error
+    h2.error-message= error
+  p Welcome Back #{currentUser.email}
+
+  h2 Let's get your task list going!
