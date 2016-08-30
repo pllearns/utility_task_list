@@ -40,11 +40,11 @@ app.use((req, res, next) => {
   next()
 })
 
-const getCurrentUser = () => {
+const getCurrentUser = function(){
   if (this.loggedIn) {
     return database.getUserById(this.session.userId)
       .then(user => {
-        user.profile_url = gravatar.profile_url(user.email)
+        user.avatar_url = gravatar.url(user.email)
         return user
       })
   }else{
@@ -92,3 +92,5 @@ app.use(function(err, req, res, next) {
 app.listen(app.get('port'), () => {
   console.log('Example app listening on port 3000!')
 })
+
+module.exports = app

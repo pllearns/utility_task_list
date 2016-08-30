@@ -5,7 +5,7 @@ const connectionString = process.env.DATABASE_URL || `postgres://${process.env.U
 const db = pgp(connectionString)
 
 const getUserById = (userId) => {
-  return db.one("select * from users wheer users.id=$1", [userId])
+  return db.one("SELECT * FROM users WHERE users.id=$1", [userId])
 }
 
 const createUser = (attributes) => {
