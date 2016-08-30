@@ -8,6 +8,7 @@ var bodyParser = require('body-parser')
 var database = require('./database')
 var routes = require('./routes')
 var connect = require('connect')
+var gravatar = require('gravatar')
 
 var app = express()
 
@@ -39,9 +40,13 @@ app.use((req, res, next) => {
   next()
 })
 
-const getCurrentUser = () => {
+const getCurrentUser = function(){
   if (this.loggedIn) {
     return database.getUserById(this.session.userId)
+      .then(user => {
+        user.avatar_url = gravatar.url(user.email)
+        return user
+      })
   }else{
     return Promise.resolve(null)
   }
@@ -87,3 +92,5 @@ app.use(function(err, req, res, next) {
 app.listen(app.get('port'), () => {
   console.log('Example app listening on port 3000!')
 })
+
+module.exports = app

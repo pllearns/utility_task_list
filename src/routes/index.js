@@ -5,17 +5,25 @@ var database = require('../database')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-
-  res.render('index', {
-    title: 'Welcome to Tasker'
-  })
-  return;
+  req.getCurrentUser()
+    .then(currentUser => {
+      if (currentUser){
+        res.render('profile', {
+          currentUser: currentUser
+        })
+      }else{
+        res.render('index')
+      }
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
 })
 
 router.get('/login', (req,res) => {
-  res.render('login', {
-    error: 'Please Log In'
-  })
+  res.render('login')
 })
 
 router.get('/signup', (req,res) => {
