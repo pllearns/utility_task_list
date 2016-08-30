@@ -103,8 +103,7 @@ router.post('/tasks', (req,res) => {
 })
 
 router.get('/logout', (req,res) => {
-  req.session = null
-  res.redirect('/')
+  res.redirect('/login')
 })
 
 router.use('/users', users)
