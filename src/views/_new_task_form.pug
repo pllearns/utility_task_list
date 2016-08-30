@@ -1,0 +1,13 @@
+form(method="post" action="/tasks")
+  div.form
+    input(type="text" name="task[task]" value=newTask.task placeholder="task")
+  div.form
+    input(type="text" name="task[sub_task]" value=newTask.sub_task placeholder="sub task")
+  div.form
+    input(type="date" name="task[due_date]" value=newTask.due_date placeholder="due date")
+  div.form
+    input(type="checkbox" name="task[is_important]" value=newTask.is_important placeholder="Important?")
+  div.form
+    input(type="checkbox" name="task[is_work]" value=newTask.is_work placeholder="Is this Work?")
+  div.form
+    input(type="submit", value="Start Task")
