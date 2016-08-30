@@ -45,7 +45,7 @@ const authenticateUser  = (email, password) => {
 const createTask = (attributes) => {
   const sql = `
   INSERT INTO
-    personal_tasks (user_id, task, sub_task, due_date, is_important, is_work )
+    tasks (user_id, task, sub_task, due_date, is_important, is_work )
   VALUES
     ($1, $2, $3, $4, $5, $6)
   RETURNING
@@ -61,6 +61,8 @@ const createTask = (attributes) => {
   ]
   return db.one(sql, variables)
 }
+
+
 
 module.exports = {
   pgp: pgp,
