@@ -117,18 +117,18 @@ const uncompleteTask = (taskId) => {
 
 const updateTask = (attributes) => {
   const sql = `
-  UPDATE
-    tasks
-  SET
-    task=$1
-  WHERE
-    id=$2
+    UPDATE
+      tasks
+    SET
+      task=$1
+    WHERE
+      id=$2
   `
   const variables = [
-    attributes.taskStuff,
+    attributes.task,
     attributes.taskId,
   ]
-  return db.one(sql, variables)
+  return db.none(sql, variables)
 }
 
 module.exports = {

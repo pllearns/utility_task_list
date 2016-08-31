@@ -140,7 +140,7 @@ router.post('/tasks', (req,res) => {
 
 router.post('/tasks/:taskId', (req,res) => {
   const task = req.body.task
-  task.userId = req.session.userId
+  task.taskId = req.params.taskId
   database.updateTask(task)
     .then(task => {
       res.redirect('/')
