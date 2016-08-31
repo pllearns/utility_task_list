@@ -10,13 +10,19 @@ block content
         div
           span(style='font-size: 20px')= task.task
 
-
         div
           div
               span(style='font-style: italic')= task.note
           div
               span(style='font-size: 13px')= humanizeDate(task.due_date)
 
+
+      .row
+        .col-xs-6
+        .col-sm-4
+          h4 Make a Todo
+            include ./_new_task_form
+            
         a.btn.btn-default(href='/logout') Logout
             //- if todo.completed
             //-   input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')
