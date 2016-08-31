@@ -8,7 +8,7 @@ block content
 	for task in tasks
 		form.task-list-item(method='post' action='/tasks/'+task.id)
 			div
-				if task.completed
+				if task.is_complete
 					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')
 				else
 					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/complete")
@@ -21,9 +21,23 @@ block content
 			div
 				a.btn.btn-default.btn-sm(href="/tasks/"+task.id+"/delete") DELETE
 
+	p Important Tasks
+		for task in tasks
+			div
+				if task.is_important
+					span=task.task
 
+	p Work Tasks
+		for task in tasks
+			div
+				if task.is_work
+					span=task.task
 
-
+	p Completed Tasks
+		for task in tasks
+			div
+				if task.is_complete
+					span=task.task
 
 	.row
 		.col-xs-6
