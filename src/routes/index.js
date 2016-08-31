@@ -7,8 +7,8 @@ var moment = require('moment')
 /* GET home page. */
 router.get('/', (req, res, next) => {
     Promise.all([
-    req.getCurrentUser(),
-    database.getAllTasksByUserId(req.session.userId)
+      req.getCurrentUser(),
+      database.getAllTasksByUserId(req.session.userId)
     ])
       .then(results => {
         const currentUser = results[0]
