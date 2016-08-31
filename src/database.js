@@ -78,6 +78,42 @@ const getAllTasksByUserId = (userId) => {
   return db.manyOrNone(sql, variables)
 }
 
+const deleteTask = (taskId) => {
+  const sql = `
+  DELETE
+    tasks
+  WHERE
+    id=$1
+  `
+  const variables = [taskId]
+  return db.none(sql, variables)
+}
+
+const completeTask = (taskId) => {
+  const sql = `
+  UPDATE
+    tasks
+  SET
+    is_complete=true
+  WHERE
+    id=$1
+  `
+  const variables = [taskId]
+  return db.oneOrNone(sql, variables)
+}
+
+const uncompleteTask = (taskId) => {
+  const sql = `
+  UPDATE
+    tasks
+  SET
+    is_complete=false
+  WHERE
+    id=$1
+  `
+  const variables = [taskId]
+  return db.oneOrNone(sql, variables)
+}
 
 module.exports = {
   pgp: pgp,
@@ -86,5 +122,8 @@ module.exports = {
   createUser: createUser,
   getUserById: getUserById,
   createTask: createTask,
-  getAllTasksByUserId: getAllTasksByUserId
+  getAllTasksByUserId: getAllTasksByUserId,
+  deleteTask: deleteTask,
+  completeTask: completeTask,
+  uncompleteTask: uncompleteTask
 }

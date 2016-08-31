@@ -1,32 +1,34 @@
 extends layout
 
 block content
-  h1= currentUser.email
-  img(src=currentUser.avatar_url)
-  h2 Let's get your task list going!
-    div.title
-      h3 Your Tasks
-      for task in tasks
-        div
-          span(style='font-size: 20px')= task.task
+	h1= currentUser.email
+	img(src=currentUser.avatar_url)
+	h2 Let's get your task list going!
+		div.title
+			h3 Your Tasks
+			for task in tasks
+				div
+					span(style='font-size: 20px')= task.task
 
-        div
-          div
-              span(style='font-style: italic')= task.note
-          div
-              span(style='font-size: 13px')= humanizeDate(task.due_date)
+				div
+					div
+						span(style='font-size: 12px')= task.sub_task
+					div
+						span(style='font-size: 13px')= humanizeDate(task.due_date)
+						//- if task.completed
+						//- 	input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')
+						//- else
+						//- 	input.checkbox-link(type='checkbox' data-href="/todos/"+todo.id+"/complete")
+						//- 		a.button.button-link(name=Math.random() type='button' data-href="/tasks/"+task.id+"/delete") DELETE
+						//-
 
 
-      .row
-        .col-xs-6
-        .col-sm-4
-          h4 Make a Todo
-            include ./_new_task_form
-            
-        a.btn.btn-default(href='/logout') Logout
-            //- if todo.completed
-            //-   input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')
-            //- else
-            //-   input.checkbox-link(type='checkbox' data-href="/todos/"+todo.id+"/complete")
 
-            //- a.button.button-link(name=Math.random() type='button' data-href="/tasks/"+task.id+"/delete") DELETE
+
+		.row
+			.col-xs-6
+			.col-sm-4
+				h4 Make a Todo
+					include ./_new_task_form
+
+			a.btn.btn-default(href='/logout') Logout

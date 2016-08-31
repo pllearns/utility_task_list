@@ -18,5 +18,6 @@ CREATE TABLE tasks (
   due_date TIMESTAMP NOT NULL DEFAULT now(),
   is_important BOOLEAN DEFAULT false,
   is_work BOOLEAN DEFAULT false,
-  created_at TIMESTAMP NOT NULL DEFAULT now()
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
+  is_complete BOOLEAN DEFAULT false
 );

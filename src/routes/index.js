@@ -67,24 +67,60 @@ router.post('/signup', (req,res) => {
   const email = attributes.email
   const password = attributes.password
   const password_confirmation = attributes.password_confirmation
-    if(password !== '' && password !== password_confirmation){
-      res.render('signup', {
-        error: 'Passwords Do Not Match',
+  if(password !== '' && password !== password_confirmation){
+    res.render('signup', {
+      error: 'Passwords Do Not Match',
+      email: email,
+    })
+  }else {
+    database.createUser(attributes)
+    .then(user => {
+      req.session.userId = user.id
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('index', {
+        error: error,
         email: email,
       })
-    } else{
-      database.createUser(attributes)
-        .then(user => {
-          req.session.userId = user.id
-          res.redirect('/')
-        })
-        .catch(error => {
-          res.render('index', {
-            error: error,
-            email: email,
-          })
-        })
-    }
+    })
+  }
+})
+
+router.get('/tasks/:taskId/delete', (req,res) => {
+  database.deleteTask(req.params.taskId)
+    .then(() => {
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
+})
+
+router.get('/tasks/:taskId/uncomplete', (req,res) => {
+  database.uncompleteTask(req.params.taskId)
+    .then(() => {
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
+})
+
+router.get('/tasks/:taskId/complete', (req,res) => {
+  database.completeTask(req.params.taskId)
+  .then(() => {
+    res.redirect('/')
+  })
+  .catch(error => {
+    res.render('error', {
+      error: error,
+    })
+  })
 })
 
 router.post('/tasks', (req,res) => {
