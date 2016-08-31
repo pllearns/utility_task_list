@@ -4,31 +4,31 @@ block content
 	h1= currentUser.email
 	img(src=currentUser.avatar_url)
 	h2 Let's get your task list going!
-		div.title
-			h3 Your Tasks
-			for task in tasks
-				div
-					span(style='font-size: 20px')= task.task
+	h3 Your Tasks
+	for task in tasks
+		form.task-list-item(method='post' action='/tasks/'+task.id)
+			div
+				if task.completed
+					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')
+				else
+					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/complete")
+				input(type='text' value=task.task name='task[task]')
 
-				div
-					div
-						span(style='font-size: 12px')= task.sub_task
-					div
-						span(style='font-size: 13px')= humanizeDate(task.due_date)
-						//- if task.completed
-						//- 	input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')
-						//- else
-						//- 	input.checkbox-link(type='checkbox' data-href="/todos/"+todo.id+"/complete")
-						//- 		a.button.button-link(name=Math.random() type='button' data-href="/tasks/"+task.id+"/delete") DELETE
-						//-
 
+			p= task.sub_task
+			.small=humanizeDate(task.due_date)
+
+			div
+				a.btn.btn-default.btn-sm(href="/tasks/"+task.id+"/delete") DELETE
 
 
 
-		.row
-			.col-xs-6
-			.col-sm-4
-				h4 Make a Todo
-					include ./_new_task_form
 
-			a.btn.btn-default(href='/logout') Logout
+
+	.row
+		.col-xs-6
+		.col-sm-4
+			h4 Make a Todo
+				include ./_new_task_form
+
+		a.btn.btn-default(href='/logout') Logout

@@ -80,7 +80,7 @@ const getAllTasksByUserId = (userId) => {
 
 const deleteTask = (taskId) => {
   const sql = `
-  DELETE
+  DELETE FROM
     tasks
   WHERE
     id=$1
@@ -115,6 +115,22 @@ const uncompleteTask = (taskId) => {
   return db.oneOrNone(sql, variables)
 }
 
+const updateTask = (attributes) => {
+  const sql = `
+  UPDATE
+    tasks
+  SET
+    task=$1
+  WHERE
+    id=$2
+  `
+  const variables = [
+    attributes.taskStuff,
+    attributes.taskId,
+  ]
+  return db.one(sql, variables)
+}
+
 module.exports = {
   pgp: pgp,
   db: db,
@@ -125,5 +141,6 @@ module.exports = {
   getAllTasksByUserId: getAllTasksByUserId,
   deleteTask: deleteTask,
   completeTask: completeTask,
-  uncompleteTask: uncompleteTask
+  uncompleteTask: uncompleteTask,
+  updateTask: updateTask
 }

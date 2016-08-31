@@ -124,7 +124,7 @@ router.get('/tasks/:taskId/complete', (req,res) => {
 })
 
 router.post('/tasks', (req,res) => {
-  var task = req.body.task
+  const task = req.body.task
   task.userId = req.session.userId
   database.createTask(task)
     .then(task => {
@@ -134,6 +134,20 @@ router.post('/tasks', (req,res) => {
       res.render('new_task_form', {
         error: error,
         newTask: task,
+      })
+    })
+})
+
+router.post('/tasks/:taskId', (req,res) => {
+  const task = req.body.task
+  task.userId = req.session.userId
+  database.updateTask(task)
+    .then(task => {
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
       })
     })
 })
