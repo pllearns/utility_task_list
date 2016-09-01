@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function(){
     return false;
   }
 
-
   var dragenter = function(event){
     event.preventDefault()
     var target = getDraggableTarget(event)
@@ -33,16 +32,27 @@ document.addEventListener('DOMContentLoaded', function(){
     else {
       target.parentNode.insertBefore(source, target.nextSibling);
     }
-    console.log('dragenter');
+    // console.log('dragenter');
   }
   var dragstart = function(event){
     source = event.target;
     event.dataTransfer.effectAllowed = 'move';
-    console.log('dragstart');
+    // console.log('dragstart');
   }
   var dragend = function(event){
     event.preventDefault()
-    console.log('dragend');
+    // console.log('dragend');
+    saveTaskRanks()
+  }
+
+  var saveTaskRanks = function(){
+    var newRanks = {}
+    $('.task-list-item').map(function(index){
+      var node = $(this)
+      newRanks[node.data('task-id')] = index
+    })
+    console.log(newRanks)
+    $.post('/tasks/set-ranks', newRanks)
   }
 
   ;[].forEach.call(taskListItems, function(taskListItem){

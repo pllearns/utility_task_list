@@ -8,7 +8,7 @@ block content
 	h2 Let's get your task list going!
 	h3 Your Tasks
 	for task in tasks
-		form.task-list-item(method='post' action='/tasks/'+task.id)
+		form.task-list-item(method='post' action='/tasks/'+task.id data-task-id=task.id)
 			div
 				if task.is_complete
 					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')

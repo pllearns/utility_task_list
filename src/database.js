@@ -90,7 +90,7 @@ const getAllTasksByUserId = (userId) => {
   WHERE
     user_id=$1
   ORDER BY
-    rank DESC
+    rank ASC
   `
   const variables = [userId]
   return db.manyOrNone(sql, variables)
