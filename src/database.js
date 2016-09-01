@@ -42,24 +42,43 @@ const authenticateUser  = (email, password) => {
     })
 }
 
-const createTask = (attributes) => {
+const getNextRank = (userId) => {
   const sql = `
-  INSERT INTO
-    tasks (user_id, task, sub_task, due_date, is_important, is_work )
-  VALUES
-    ($1, $2, $3, $4, $5, $6)
-  RETURNING
-    *
+    SELECT
+      MAX(rank)
+    FROM
+      tasks
+    WHERE
+      user_id=$1
   `
-  const variables = [
-    attributes.userId,
-    attributes.task,
-    attributes.sub_task,
-    attributes.due_date,
-    attributes.is_important,
-    attributes.is_work,
-  ]
-  return db.one(sql, variables)
+  return db.oneOrNone(sql, [userId])
+    .then(result => {
+      return (result.rank || 0)+1
+    })
+}
+
+const createTask = (attributes) => {
+  return getNextRank(attributes.userId)
+    .then(rank => {
+      const sql = `
+      INSERT INTO
+        tasks (user_id, rank, task, sub_task, due_date, is_important, is_work )
+      VALUES
+        ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING
+        *
+      `
+      const variables = [
+        attributes.userId,
+        rank,
+        attributes.task,
+        attributes.sub_task,
+        attributes.due_date,
+        attributes.is_important,
+        attributes.is_work,
+      ]
+      return db.one(sql, variables)
+    })
 }
 
 const getAllTasksByUserId = (userId) => {
@@ -71,13 +90,66 @@ const getAllTasksByUserId = (userId) => {
   WHERE
     user_id=$1
   ORDER BY
-    created_at ASC,
-    id DESC
+    rank DESC
   `
   const variables = [userId]
   return db.manyOrNone(sql, variables)
 }
 
+//change the ORDER BY to rank DESC
+
+const deleteTask = (taskId) => {
+  const sql = `
+  DELETE FROM
+    tasks
+  WHERE
+    id=$1
+  `
+  const variables = [taskId]
+  return db.none(sql, variables)
+}
+
+const completeTask = (taskId) => {
+  const sql = `
+  UPDATE
+    tasks
+  SET
+    is_complete=true
+  WHERE
+    id=$1
+  `
+  const variables = [taskId]
+  return db.oneOrNone(sql, variables)
+}
+
+const uncompleteTask = (taskId) => {
+  const sql = `
+  UPDATE
+    tasks
+  SET
+    is_complete=false
+  WHERE
+    id=$1
+  `
+  const variables = [taskId]
+  return db.oneOrNone(sql, variables)
+}
+
+const updateTask = (attributes) => {
+  const sql = `
+    UPDATE
+      tasks
+    SET
+      task=$1
+    WHERE
+      id=$2
+  `
+  const variables = [
+    attributes.task,
+    attributes.taskId,
+  ]
+  return db.none(sql, variables)
+}
 
 module.exports = {
   pgp: pgp,
@@ -86,5 +158,9 @@ module.exports = {
   createUser: createUser,
   getUserById: getUserById,
   createTask: createTask,
-  getAllTasksByUserId: getAllTasksByUserId
+  getAllTasksByUserId: getAllTasksByUserId,
+  deleteTask: deleteTask,
+  completeTask: completeTask,
+  uncompleteTask: uncompleteTask,
+  updateTask: updateTask
 }

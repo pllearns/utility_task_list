@@ -1,13 +1,15 @@
 form(method="post" action="/tasks")
-  div.form
+  .form-group
+  div
     input(type="text" name="task[task]" value=newTask.task placeholder="task")
-  div.form
+  div
     input(type="text" name="task[sub_task]" value=newTask.sub_task placeholder="sub task")
-  div.form
+  div
     input(type="date" name="task[due_date]" value=newTask.due_date placeholder="due date")
-  div.form
+  label Is this important?
     input(type="checkbox" name="task[is_important]" value=newTask.is_important placeholder="Important?")
-  div.form
+  div
+  label Is this Work?
     input(type="checkbox" name="task[is_work]" value=newTask.is_work placeholder="Is this Work?")
-  div.form
+  div
     input(type="submit", value="Start Task")

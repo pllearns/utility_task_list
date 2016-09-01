@@ -12,11 +12,13 @@ DROP TABLE IF EXISTS tasks;
 
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY,
+  rank INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
   task VARCHAR(255) NOT NULL,
   sub_task VARCHAR(255),
   due_date TIMESTAMP NOT NULL DEFAULT now(),
   is_important BOOLEAN DEFAULT false,
   is_work BOOLEAN DEFAULT false,
-  created_at TIMESTAMP NOT NULL DEFAULT now()
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
+  is_complete BOOLEAN DEFAULT false
 );

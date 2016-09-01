@@ -7,8 +7,8 @@ var moment = require('moment')
 /* GET home page. */
 router.get('/', (req, res, next) => {
     Promise.all([
-    req.getCurrentUser(),
-    database.getAllTasksByUserId(req.session.userId)
+      req.getCurrentUser(),
+      database.getAllTasksByUserId(req.session.userId)
     ])
       .then(results => {
         const currentUser = results[0]
@@ -67,28 +67,64 @@ router.post('/signup', (req,res) => {
   const email = attributes.email
   const password = attributes.password
   const password_confirmation = attributes.password_confirmation
-    if(password !== '' && password !== password_confirmation){
-      res.render('signup', {
-        error: 'Passwords Do Not Match',
+  if(password !== '' && password !== password_confirmation){
+    res.render('signup', {
+      error: 'Passwords Do Not Match',
+      email: email,
+    })
+  }else {
+    database.createUser(attributes)
+    .then(user => {
+      req.session.userId = user.id
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('index', {
+        error: error,
         email: email,
       })
-    } else{
-      database.createUser(attributes)
-        .then(user => {
-          req.session.userId = user.id
-          res.redirect('/')
-        })
-        .catch(error => {
-          res.render('index', {
-            error: error,
-            email: email,
-          })
-        })
-    }
+    })
+  }
+})
+
+router.get('/tasks/:taskId/delete', (req,res) => {
+  database.deleteTask(req.params.taskId)
+    .then(() => {
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
+})
+
+router.get('/tasks/:taskId/uncomplete', (req,res) => {
+  database.uncompleteTask(req.params.taskId)
+    .then(() => {
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
+})
+
+router.get('/tasks/:taskId/complete', (req,res) => {
+  database.completeTask(req.params.taskId)
+  .then(() => {
+    res.redirect('/')
+  })
+  .catch(error => {
+    res.render('error', {
+      error: error,
+    })
+  })
 })
 
 router.post('/tasks', (req,res) => {
-  var task = req.body.task
+  const task = req.body.task
   task.userId = req.session.userId
   database.createTask(task)
     .then(task => {
@@ -102,9 +138,22 @@ router.post('/tasks', (req,res) => {
     })
 })
 
+router.post('/tasks/:taskId', (req,res) => {
+  const task = req.body.task
+  task.taskId = req.params.taskId
+  database.updateTask(task)
+    .then(task => {
+      res.redirect('/')
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
+})
+
 router.get('/logout', (req,res) => {
-  req.session = null
-  res.redirect('/')
+  res.redirect('/login')
 })
 
 router.use('/users', users)
