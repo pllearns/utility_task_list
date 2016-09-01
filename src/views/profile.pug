@@ -1,6 +1,8 @@
 extends layout
 
 block content
+	script(src='/javascripts/drag_and_drop.js')
+
 	h1= currentUser.email
 	img(src=currentUser.avatar_url)
 	h2 Let's get your task list going!
