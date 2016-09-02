@@ -9,7 +9,4 @@ form.form-inline(method="post" action="/tasks")
 		label by when?
 		input(type="date" name="task[due_date]" value=newTask.due_date placeholder="by when?")
 	div
-		input(type="checkbox" name="task[is_important]" value=newTask.is_important placeholder="Important?")
-		label Is this important?
-	div
 		input(type="submit", value="Start Taskr")
