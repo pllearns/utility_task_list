@@ -7,39 +7,43 @@ Keep in mind that for this application that you will have to hand create the dat
 
 What you will be able to do with this app:
 
-- Create to do list items.
-- Can delete unwanted to do list items.
-- Can check items off as completed.
-- Can rearrange to do list items.
+- Create task list items.
+- Can delete unwanted task list items.
+- Can check task list items off as completed.
+- Can rearrange task list items.
 - Can log into my account.
-- Can edit the text on existing to do's
+- Can edit the text on existing tasks
 
 Specs:
 
-- [ ] Visitors can sign up / sign in / sign out.
-- [ ] User Profile that contains a gravatar and goals/bio.
-- [ ] Work/Personal Todo Lists 
-- [ ] A logged in user can CRUD `todo list` items
-- [ ] A logged in user can `complete` and `uncomplete` a `todo list` item.
-- [ ] A logged in user can sort their `todo list` items
-- [ ] Has unoffensive and darn near attactive layout / design / style.
-- [ ] Follow good Git team behaviors (do all your work on branches & submit pull requests for review before merging to master)
-- [ ] Use `es2016` JavaScript Syntax with `babel`
-- [ ] Use `Postgresql`
-- [ ] Use `node` and `express`
-- [ ] The artifact produced is properly licensed, preferably with the MIT license.
-- [ ] Deploy the app to heroku
+- [x] Visitors can sign up / sign in / sign out.
+- [x] User Profile that contains a gravatar and goals/bio.
+- [x] Work/Personal Task Lists
+- [x] A logged in user can CRUD `task list` items
+- [x] A logged in user can `complete` and `uncomplete` a `task list` item.
+- [x] A logged in user can sort their `task list` items
+- [x] Follow good Git team behaviors (do all your work on branches & submit pull requests for review before merging to master)
+- [x] Use `es2016` JavaScript Syntax with `babel`
+- [x] Use `Postgresql`
+- [x] Use `node` and `express`
+- [x] The artifact produced is properly licensed, preferably with the MIT license.
+- [x] Deploy the app to heroku
 
-How to get Started: 
+How to get Started:
 
 # Quality Rubric
 
-- [ ] No JSHint errors
-- [ ] Tested - All specs passing
-- [ ] Documented - Contains instructions for a user to set up app locally
-- [ ] Functional - Project runs in localhost
-- [ ] Structured - Directory structure allows new developers to quickly find and add files
-- [ ] Clearly Named - `Functions`, `variables`, `files`, `CSS classes` and little to no `ids`
-- [ ] Abstracted - Small, single-responsibility functions leveraged for encapsulation & reusability
-- [ ] Git Logged - Readable and clean with clear, complete, professional commit messages
-- [ ] Not Commented - Unless truly necessary. No dead code, console.logs, fits/xits
+- [x] No JSHint errors
+- [x] Tested - All specs passing
+- [x] Documented - Contains instructions for a user to set up app locally
+- [x] Functional - Project runs in localhost
+- [x] Structured - Directory structure allows new developers to quickly find and add files
+- [x] Clearly Named - `Functions`, `variables`, `files`, `CSS classes` and little to no `ids`
+- [x] Abstracted - Small, single-responsibility functions leveraged for encapsulation & reusability
+- [x] Git Logged - Readable and clean with clear, complete, professional commit messages
+- [x] Not Commented - Unless truly necessary. No dead code, console.logs, fits/xits
+- [x] Has unoffensive and darn near attractive layout / design / style.
+
+Our Database Schema:
+
+![Schema](/src/public/images/SchemaSQL.png)
