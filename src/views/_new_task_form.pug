@@ -1,4 +1,6 @@
 form.form-inline(method="post" action="/tasks")
+	input(type="hidden" name="list" value=list)
+	input(type="hidden" name="task[is_work]" value=(list === 'work' ? 'true' : 'false'))
 	.form-group
 		input(type="text" name="task[task]" value=newTask.task placeholder="your taskr")
 	.form-group
@@ -9,8 +11,5 @@ form.form-inline(method="post" action="/tasks")
 	div
 		input(type="checkbox" name="task[is_important]" value=newTask.is_important placeholder="Important?")
 		label Is this important?
-	div
-		input(type="checkbox" name="task[is_work]" value=newTask.is_work placeholder="Is this Work?")
-		label.form-group Is this Work?
 	div
 		input(type="submit", value="Start Taskr")

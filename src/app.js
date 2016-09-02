@@ -40,21 +40,22 @@ app.use(cookieSession({
 }))
 app.use((req, res, next) => {
   req.loggedIn = !!req.session.userId
-  req.getCurrentUser = getCurrentUser
+  res.locals.loggedIn = req.loggedIn
+  req.getCurrentUser = function() {
+    if (req.loggedIn) {
+      return database.getUserById(this.session.userId)
+        .then(user => {
+          user.avatar_url = gravatar.url(user.email)
+          res.locals.currentUser = user
+          return user
+        })
+    } else {
+      res.locals.currentUser = null
+      return Promise.resolve(null)
+    }
+  }
   next()
 })
-
-const getCurrentUser = function() {
-  if (this.loggedIn) {
-    return database.getUserById(this.session.userId)
-      .then(user => {
-        user.avatar_url = gravatar.url(user.email)
-        return user
-      })
-  } else {
-    return Promise.resolve(null)
-  }
-}
 
 app.use('/', routes)
 app.use('/users', routes)
