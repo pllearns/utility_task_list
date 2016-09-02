@@ -4,25 +4,28 @@ var users = require('./users')
 var database = require('../database')
 var moment = require('moment')
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  if (!req.loggedIn) {
-    res.render('index')
-    return
-  }
 
+const renderTodoListPage = function(list, req, res) {
   Promise.all([
       req.getCurrentUser(),
       database.getAllTasksByUserId(req.session.userId)
     ])
     .then(results => {
       const currentUser = results[0]
-      const tasks = results[1]
+      let tasks = results[1]
+
+      tasks = tasks.filter(task => {
+        return list === 'all' ||
+          (list === 'work' & task.is_work) ||
+          (list === 'personal' & !task.is_work);
+      })
+
       res.render('profile', {
         currentUser: currentUser,
         tasks: tasks,
         newTask: {},
-        humanizeDate: humanizeDate
+        humanizeDate: humanizeDate,
+        list: list
       })
     })
     .catch(error => {
@@ -30,7 +33,28 @@ router.get('/', (req, res, next) => {
         error: error,
       })
     })
+}
+
+/* GET home page. */
+router.get('/', (req, res, next) => {
+  if (!req.loggedIn) {
+    res.render('index')
+    return
+  }
+  renderTodoListPage('all', req, res)
 })
+
+router.get('/:list', (req, res, next) => {
+  const list = req.params.list.toLowerCase()
+  if (list === 'work') {
+    return renderTodoListPage('work', req, res)
+  }
+  if (list === 'personal') {
+    return renderTodoListPage('personal', req, res)
+  }
+  next()
+})
+
 
 const humanizeDate = (date) => {
   return moment(date).format('MMM Do YY')
@@ -105,22 +129,12 @@ router.get('/tasks/:taskId/delete', (req, res) => {
     })
 })
 
-// router.get('/users/:user.id/delete', (req, res) => {
-//   database.deleteUser(req.params.userId)
-//     .then(() => {
-//       res.redirect('/')
-//     })
-//     .catch(error => {
-//       res.render('error', {
-//         error: error,
-//       })
-//     })
-// })
+const listToPath = list => !list || list === 'all' ? '/' : '/' + list
 
 router.get('/tasks/:taskId/uncomplete', (req, res) => {
   database.uncompleteTask(req.params.taskId)
     .then(() => {
-      res.redirect('/')
+      res.redirect(listToPath(req.query.list))
     })
     .catch(error => {
       res.render('error', {
@@ -132,7 +146,7 @@ router.get('/tasks/:taskId/uncomplete', (req, res) => {
 router.get('/tasks/:taskId/complete', (req, res) => {
   database.completeTask(req.params.taskId)
     .then(() => {
-      res.redirect('/')
+      res.redirect(listToPath(req.query.list))
     })
     .catch(error => {
       res.render('error', {
@@ -143,10 +157,11 @@ router.get('/tasks/:taskId/complete', (req, res) => {
 
 router.post('/tasks', (req, res) => {
   const task = req.body.task
+  task.is_work = task.is_work === 'true'
   task.userId = req.session.userId
   database.createTask(task)
     .then(task => {
-      res.redirect('/')
+      res.redirect(listToPath(req.body.list))
     })
     .catch(error => {
       res.render('new_task_form', {
@@ -156,12 +171,27 @@ router.post('/tasks', (req, res) => {
     })
 })
 
+router.post('/tasks/set-ranks', (req, res) => {
+  const newRanks = req.body
+  database.setRanks(req.session.userId, newRanks)
+    .then(task => {
+      res.send('')
+    })
+    .catch(error => {
+      res.status(400).json({
+        errorMessage: error.message,
+        error: error,
+      })
+    })
+})
+
+
 router.post('/tasks/:taskId', (req, res) => {
   const task = req.body.task
   task.taskId = req.params.taskId
   database.updateTask(task)
     .then(task => {
-      res.redirect('/')
+      res.redirect(listToPath(req.body.list))
     })
     .catch(error => {
       res.render('error', {
@@ -170,22 +200,6 @@ router.post('/tasks/:taskId', (req, res) => {
     })
 })
 
-// router.post('/tasks/set-ranks', (req,res) => {
-//   const task = req.body.task
-//   task.userId = req.session.userId
-//   database.setRanks(task)
-//     .then($('.task-list-item').forEach(function(task) {
-//       Promise.all([
-//         req.getCurrentUser(),
-//         database.getAllTasksByUserId(req.session.userId)
-//       ])
-//     })
-//     .catch(error => {
-//       res.render('error', {
-//       error: error,
-//     })
-//   })
-// })
 
 
 router.get('/logout', (req, res) => {
