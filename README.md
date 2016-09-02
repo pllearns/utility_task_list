@@ -12,7 +12,7 @@ What you will be able to do with this app:
 - Can log into my account.
 - Can edit the text on existing tasks
 
-Specs:
+# Specifications
 
 - [x] Visitors can sign up / sign in / sign out.
 - [x] User Profile that contains a gravatar and goals/bio.
