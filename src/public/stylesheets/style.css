@@ -1,1 +1,24 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
 
+/*.content {
+  position: relative;;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}*/
+
+.container {
+  display: table;
+  vertical-align: middle;
+}
+
+.vertical-center-row {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.form-group {
+  padding: 2px;
+}

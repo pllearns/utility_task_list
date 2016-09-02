@@ -1,0 +1,7 @@
+make route for this post
+data = request.body
+db.setRanks
+
+create N sql queries for each key in the post
+
+return Promise.all(queries)

@@ -6,50 +6,55 @@ var moment = require('moment')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    Promise.all([
+  if (!req.loggedIn) {
+    res.render('index')
+    return
+  }
+
+  Promise.all([
       req.getCurrentUser(),
       database.getAllTasksByUserId(req.session.userId)
     ])
-      .then(results => {
-        const currentUser = results[0]
-        const tasks = results[1]
-        res.render('profile', {
-            currentUser: currentUser,
-            tasks: tasks,
-            newTask: {},
-            humanizeDate: humanizeDate
-          })
+    .then(results => {
+      const currentUser = results[0]
+      const tasks = results[1]
+      res.render('profile', {
+        currentUser: currentUser,
+        tasks: tasks,
+        newTask: {},
+        humanizeDate: humanizeDate
       })
-      .catch(error => {
-        res.render('error', {
-          error: error,
-        })
+    })
+    .catch(error => {
+      res.render('error', {
+        error: error,
       })
+    })
 })
 
 const humanizeDate = (date) => {
   return moment(date).format('MMM Do YY')
 }
 
-router.get('/login', (req,res) => {
+router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.get('/signup', (req,res) => {
-  res.render('signup',{
+router.get('/signup', (req, res) => {
+  res.render('signup', {
     email: ''
   })
 })
 
-router.post('/login', (req,res) => {
+router.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
   database.authenticateUser(email, password)
     .then(userId => {
-      if(userId){
+      if (userId) {
         req.session.userId = userId
         res.redirect('/')
-      }else{
+      } else {
         res.render('login', {
           error: 'Email or Password Not Found'
         })
@@ -62,32 +67,32 @@ router.post('/login', (req,res) => {
     })
 })
 
-router.post('/signup', (req,res) => {
+router.post('/signup', (req, res) => {
   const attributes = req.body.user
   const email = attributes.email
   const password = attributes.password
   const password_confirmation = attributes.password_confirmation
-  if(password !== '' && password !== password_confirmation){
+  if (password !== '' && password !== password_confirmation) {
     res.render('signup', {
       error: 'Passwords Do Not Match',
       email: email,
     })
-  }else {
+  } else {
     database.createUser(attributes)
-    .then(user => {
-      req.session.userId = user.id
-      res.redirect('/')
-    })
-    .catch(error => {
-      res.render('index', {
-        error: error,
-        email: email,
+      .then(user => {
+        req.session.userId = user.id
+        res.redirect('/')
       })
-    })
+      .catch(error => {
+        res.render('index', {
+          error: error,
+          email: email,
+        })
+      })
   }
 })
 
-router.get('/tasks/:taskId/delete', (req,res) => {
+router.get('/tasks/:taskId/delete', (req, res) => {
   database.deleteTask(req.params.taskId)
     .then(() => {
       res.redirect('/')
@@ -99,7 +104,7 @@ router.get('/tasks/:taskId/delete', (req,res) => {
     })
 })
 
-router.get('/tasks/:taskId/uncomplete', (req,res) => {
+router.get('/tasks/:taskId/uncomplete', (req, res) => {
   database.uncompleteTask(req.params.taskId)
     .then(() => {
       res.redirect('/')
@@ -111,19 +116,19 @@ router.get('/tasks/:taskId/uncomplete', (req,res) => {
     })
 })
 
-router.get('/tasks/:taskId/complete', (req,res) => {
+router.get('/tasks/:taskId/complete', (req, res) => {
   database.completeTask(req.params.taskId)
-  .then(() => {
-    res.redirect('/')
-  })
-  .catch(error => {
-    res.render('error', {
-      error: error,
+    .then(() => {
+      res.redirect('/')
     })
-  })
+    .catch(error => {
+      res.render('error', {
+        error: error,
+      })
+    })
 })
 
-router.post('/tasks', (req,res) => {
+router.post('/tasks', (req, res) => {
   const task = req.body.task
   task.userId = req.session.userId
   database.createTask(task)
@@ -138,7 +143,7 @@ router.post('/tasks', (req,res) => {
     })
 })
 
-router.post('/tasks/:taskId', (req,res) => {
+router.post('/tasks/:taskId', (req, res) => {
   const task = req.body.task
   task.taskId = req.params.taskId
   database.updateTask(task)
@@ -152,7 +157,25 @@ router.post('/tasks/:taskId', (req,res) => {
     })
 })
 
-router.get('/logout', (req,res) => {
+// router.post('/tasks/set-ranks', (req,res) => {
+//   const task = req.body.task
+//   task.userId = req.session.userId
+//   database.setRanks(task)
+//     .then($('.task-list-item').forEach(function(task) {
+//       Promise.all([
+//         req.getCurrentUser(),
+//         database.getAllTasksByUserId(req.session.userId)
+//       ])
+//     })
+//     .catch(error => {
+//       res.render('error', {
+//       error: error,
+//     })
+//   })
+// })
+
+
+router.get('/logout', (req, res) => {
   res.redirect('/login')
 })
 

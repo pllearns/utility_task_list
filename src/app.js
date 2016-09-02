@@ -9,11 +9,12 @@ var database = require('./database')
 var routes = require('./routes')
 var connect = require('connect')
 var gravatar = require('gravatar')
+var bootstrap = require("express-bootstrap-service")
 
 var app = express()
 
 app.get('env') === process.env.NODE_ENV || 'development'
-// view engine setup
+  // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 app.set('trust proxy', 1)
@@ -23,8 +24,11 @@ app.set('port', (process.env.PORT || 3000))
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(logger('dev'))
+app.use(bootstrap.serve)
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieSession({
@@ -40,14 +44,14 @@ app.use((req, res, next) => {
   next()
 })
 
-const getCurrentUser = function(){
+const getCurrentUser = function() {
   if (this.loggedIn) {
     return database.getUserById(this.session.userId)
       .then(user => {
         user.avatar_url = gravatar.url(user.email)
         return user
       })
-  }else{
+  } else {
     return Promise.resolve(null)
   }
 }
