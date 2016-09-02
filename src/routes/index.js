@@ -129,18 +129,6 @@ router.get('/tasks/:taskId/delete', (req, res) => {
     })
 })
 
-// router.get('/users/:user.id/delete', (req, res) => {
-//   database.deleteUser(req.params.userId)
-//     .then(() => {
-//       res.redirect('/')
-//     })
-//     .catch(error => {
-//       res.render('error', {
-//         error: error,
-//       })
-//     })
-// })
-
 const listToPath = list => !list || list === 'all' ? '/' : '/' + list
 
 router.get('/tasks/:taskId/uncomplete', (req, res) => {

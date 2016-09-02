@@ -202,5 +202,5 @@ module.exports = {
   updateTask: updateTask,
   deleteUser: deleteUser,
   setRanks: setRanks,
-  setRank: setRank,
+  setRank: setRank
 }
