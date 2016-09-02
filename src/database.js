@@ -17,15 +17,15 @@ const createUser = (attributes) => {
     RETURNING
       *
     `
-const encrypted_password = bcrypt.hashSync(attributes.password)
-const variables = [
-  attributes.email,
-  encrypted_password,
-]
-return db.oneOrNone(sql, variables)
+  const encrypted_password = bcrypt.hashSync(attributes.password)
+  const variables = [
+    attributes.email,
+    encrypted_password,
+  ]
+  return db.oneOrNone(sql, variables)
 }
 
-const authenticateUser  = (email, password) => {
+const authenticateUser = (email, password) => {
   const sql = `
     SELECT
       id, encrypted_password
@@ -53,7 +53,7 @@ const getNextRank = (userId) => {
   `
   return db.oneOrNone(sql, [userId])
     .then(result => {
-      return (result.rank || 0)+1
+      return (result.rank || 0) + 1
     })
 }
 

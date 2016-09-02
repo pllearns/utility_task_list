@@ -3,48 +3,49 @@ extends layout
 block content
 	script(src='/javascripts/drag_and_drop.js')
 
-	h1= currentUser.email
-	img(src=currentUser.avatar_url)
-	h2 Let's get your task list going!
+	.container
+		.vertical-center-row
+			div(align='center')
+				h1= currentUser.email
+				img.img-responsive.center-block(src=currentUser.avatar_url)
+				a.btn.btn-default.form-group(href='/logout') Logout
+				h2 Let's get your task list going!
 	h3 Your Tasks
 	for task in tasks
-		form.task-list-item(method='post' action='/tasks/'+task.id data-task-id=task.id)
-			div
+		form.form-inline.task-list-item(method='post' action='/tasks/'+task.id data-task-id=task.id)
+			.form-group
 				if task.is_complete
 					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete" checked='checked')
 				else
-					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/complete")
-				input(type='text' value=task.task name='task[task]')
+					input.checkbox-link(type='checkbox' data-href="/tasks/"+task.id+"/complete")
+					input(type='text' value=task.task name='task[task]')
 
 
-			p= task.sub_task
-			.small=humanizeDate(task.due_date)
+			p.form-group= task.sub_task
+			.small.form-group=humanizeDate(task.due_date)
+				a.btn.btn-default.btn-sm.form-group(href="/tasks/"+task.id+"/delete") DELETE
 
-			div
-				a.btn.btn-default.btn-sm(href="/tasks/"+task.id+"/delete") DELETE
 
-	p Important Tasks
+	div
+	p.bg-primary Important Tasks
 		for task in tasks
 			div
 				if task.is_important
 					span=task.task
 
-	p Work Tasks
+	p.bg-info Work Tasks
 		for task in tasks
 			div
 				if task.is_work
 					span=task.task
 
-	p Completed Tasks
+	p.bg-success Completed Tasks
 		for task in tasks
 			div
 				if task.is_complete
 					span=task.task
 
-	.row
-		.col-xs-6
-		.col-sm-4
-			h4 Make a Todo
+	.form-inline
+		.form-group
+			h4.form-group Taskr It
 				include ./_new_task_form
-
-		a.btn.btn-default(href='/logout') Logout

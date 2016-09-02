@@ -1,16 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  if error
-    h2.error-message= error
-  p Sign Up Now!
-    form(method="post" action="/signup")
-      div
-        input(type="text" name="user[email]", placeholder="email", value=email)
-      div
-        input(type="password" name="user[password]", placeholder="password")
-      div
-        input(type="password" name="user[password_confirmation]", placeholder="password confirmation")
-      div
-        input(type="submit", value="Signup Here")
+	h1= title
+	if error
+		h2.error-message= error
+	p.col-sm-10 Sign Up Now!
+		form.form-horizontal(method="post" action="/signup")
+			div.form-group
+			div.col-sm-10
+				input(type="text" name="user[email]", placeholder="email", value=email)
+			div.col-sm-10
+				input(type="password" name="user[password]", placeholder="password")
+			div.col-sm-10
+				input(type="password" name="user[password_confirmation]", placeholder="password confirmation")
+			div.col-md-4
+				input(type="submit", value="Signup Here")
+				div
+					a.btn-btn-default(href='/login') Login

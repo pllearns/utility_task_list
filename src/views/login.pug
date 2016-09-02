@@ -1,14 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  if error
-    h2.error-message= error
-  p Log In Now!
-    form(method="post" action="/login")
-      div
-        input(type="text" name="email", placeholder="email")
-      div
-        input(type="password" name="password", placeholder="password")
-      div
-        input(type="submit", value="Login Here")
+	h1= title
+	if error
+		h2.error-message= error
+	p Log In Now!
+		form(method="post" action="/login")
+			div
+				input(type="text" name="email", placeholder="email")
+			div
+				input(type="password" name="password", placeholder="password")
+			div
+				input(type="submit", value="Login Here")
+		div
+			a.btn-btn-default(href='/signup') Signup

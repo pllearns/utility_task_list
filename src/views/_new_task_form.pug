@@ -1,15 +1,16 @@
-form(method="post" action="/tasks")
-  .form-group
-  div
-    input(type="text" name="task[task]" value=newTask.task placeholder="task")
-  div
-    input(type="text" name="task[sub_task]" value=newTask.sub_task placeholder="sub task")
-  div
-    input(type="date" name="task[due_date]" value=newTask.due_date placeholder="due date")
-  label Is this important?
-    input(type="checkbox" name="task[is_important]" value=newTask.is_important placeholder="Important?")
-  div
-  label Is this Work?
-    input(type="checkbox" name="task[is_work]" value=newTask.is_work placeholder="Is this Work?")
-  div
-    input(type="submit", value="Start Task")
+form.form-inline(method="post" action="/tasks")
+	.form-group
+		input(type="text" name="task[task]" value=newTask.task placeholder="your taskr")
+	.form-group
+		input(type="text" name="task[sub_task]" value=newTask.sub_task placeholder="why?")
+	.form-group
+		label by when?
+		input(type="date" name="task[due_date]" value=newTask.due_date placeholder="by when?")
+	div
+		input(type="checkbox" name="task[is_important]" value=newTask.is_important placeholder="Important?")
+		label Is this important?
+	div
+		input(type="checkbox" name="task[is_work]" value=newTask.is_work placeholder="Is this Work?")
+		label.form-group Is this Work?
+	div
+		input(type="submit", value="Start Taskr")
