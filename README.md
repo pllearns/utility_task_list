@@ -27,8 +27,6 @@ Specs:
 - [x] The artifact produced is properly licensed, preferably with the MIT license.
 - [x] Deploy the app to heroku
 
-How to get Started:
-
 # Quality Rubric
 
 - [x] No JSHint errors
