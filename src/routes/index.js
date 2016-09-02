@@ -183,6 +183,21 @@ router.post('/tasks', (req, res) => {
     })
 })
 
+router.post('/tasks/set-ranks', (req, res) => {
+  const newRanks = req.body
+  database.setRanks(req.session.userId, newRanks)
+    .then(task => {
+      res.send('')
+    })
+    .catch(error => {
+      res.status(400).json({
+        errorMessage: error.message,
+        error: error,
+      })
+    })
+})
+
+
 router.post('/tasks/:taskId', (req, res) => {
   const task = req.body.task
   task.taskId = req.params.taskId
@@ -197,22 +212,6 @@ router.post('/tasks/:taskId', (req, res) => {
     })
 })
 
-// router.post('/tasks/set-ranks', (req,res) => {
-//   const task = req.body.task
-//   task.userId = req.session.userId
-//   database.setRanks(task)
-//     .then($('.task-list-item').forEach(function(task) {
-//       Promise.all([
-//         req.getCurrentUser(),
-//         database.getAllTasksByUserId(req.session.userId)
-//       ])
-//     })
-//     .catch(error => {
-//       res.render('error', {
-//       error: error,
-//     })
-//   })
-// })
 
 
 router.get('/logout', (req, res) => {

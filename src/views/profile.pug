@@ -14,12 +14,17 @@ block content
 					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete?list="+list checked='checked')
 				else
 					input.checkbox-link(type='checkbox' data-href="/tasks/"+task.id+"/complete?list="+list)
+				span= task.id
+				span :::
+				span= task.rank
 				input.task-list-item-title(type='text' value=task.task name='task[task]')
 			.col-sm-3
 				= task.sub_task
-			.col-sm-3
-				.small=humanizeDate(task.due_date)
 			.col-sm-2
+				.small=humanizeDate(task.due_date)
+			.col-sm-1
 				a.btn.btn-default.btn-sm.form-group(href="/tasks/"+task.id+"/delete") DELETE
+			.col-sm-1
+				div BURGER
 	hr
 	include ./_new_task_form

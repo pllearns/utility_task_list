@@ -164,6 +164,30 @@ const updateTask = (attributes) => {
   return db.none(sql, variables)
 }
 
+const setRanks = (userId, newRanks) => {
+  const queries = []
+  console.log('newRanks', newRanks)
+  for (let taskId in newRanks) {
+    console.log(userId, taskId, newRanks[taskId])
+    queries.push(setRank(userId, taskId, newRanks[taskId]))
+  }
+  return Promise.all(queries)
+}
+
+const setRank = (userId, taskId, rank) => {
+  const sql = `
+    UPDATE
+      tasks
+    SET
+      rank=$1
+    WHERE
+      id=$2
+    AND
+      user_id=$3
+  `
+  return db.none(sql, [rank, taskId, userId])
+}
+
 module.exports = {
   pgp: pgp,
   db: db,
@@ -176,5 +200,7 @@ module.exports = {
   completeTask: completeTask,
   uncompleteTask: uncompleteTask,
   updateTask: updateTask,
-  deleteUser: deleteUser
+  deleteUser: deleteUser,
+  setRanks: setRanks,
+  setRank: setRank,
 }
