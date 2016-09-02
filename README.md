@@ -1,6 +1,4 @@
-# utility_task_list
-
-[TASKR](https://desolate-spire-76632.herokuapp.com)
+# [TASKR](https://desolate-spire-76632.herokuapp.com)
 
 Advisories:
 Keep in mind that for this application that you will have to hand create the database to handle this application. We are still in alpha. Thanks.
