@@ -1,7 +1,7 @@
 INSERT INTO
-  users (email, encrypted_password)
+  users (email, encrypted_password, bio)
 VALUES
-  ('bob@bob.com', '$2a$06$IXZlu18nkWvuCY8aRLixLu6msCgx1q2kWxuiUY7fCTMAceEflcXwe');
+  ('bob@bob.com', '$2a$06$IXZlu18nkWvuCY8aRLixLu6msCgx1q2kWxuiUY7fCTMAceEflcXwe', 'Cuz I is a boss');
 
 INSERT INTO
   tasks (user_id, rank, task, sub_task, due_date, is_important, is_work, is_complete)

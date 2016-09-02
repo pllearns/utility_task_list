@@ -11,9 +11,9 @@ const getUserById = (userId) => {
 const createUser = (attributes) => {
   const sql = `
     INSERT INTO
-      users (email, encrypted_password)
+      users (email, encrypted_password, bio)
     VALUES
-      ($1, $2)
+      ($1, $2, $3)
     RETURNING
       *
     `
@@ -21,6 +21,7 @@ const createUser = (attributes) => {
   const variables = [
     attributes.email,
     encrypted_password,
+    attributes.bio
   ]
   return db.oneOrNone(sql, variables)
 }
@@ -62,7 +63,7 @@ const createTask = (attributes) => {
     .then(rank => {
       const sql = `
       INSERT INTO
-        tasks (user_id, rank, task, sub_task, due_date, is_important, is_work )
+        tasks (user_id, rank, task, sub_task, due_date, is_important, is_work)
       VALUES
         ($1, $2, $3, $4, $5, $6, $7)
       RETURNING
