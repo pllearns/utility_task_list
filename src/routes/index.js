@@ -72,6 +72,7 @@ router.post('/signup', (req, res) => {
   const email = attributes.email
   const password = attributes.password
   const password_confirmation = attributes.password_confirmation
+  const bio = attributes.bio
   if (password !== '' && password !== password_confirmation) {
     res.render('signup', {
       error: 'Passwords Do Not Match',

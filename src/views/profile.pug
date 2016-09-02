@@ -7,6 +7,7 @@ block content
 		.vertical-center-row
 			div(align='center')
 				h1= currentUser.email
+				h2= currentUser.bio
 				img.img-responsive.center-block(src=currentUser.avatar_url)
 				a.btn.btn-default.form-group(href='/logout') Logout
 				h2 Let's get your task list going!
