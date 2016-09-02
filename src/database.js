@@ -166,9 +166,7 @@ const updateTask = (attributes) => {
 
 const setRanks = (userId, newRanks) => {
   const queries = []
-  console.log('newRanks', newRanks)
   for (let taskId in newRanks) {
-    console.log(userId, taskId, newRanks[taskId])
     queries.push(setRank(userId, taskId, newRanks[taskId]))
   }
   return Promise.all(queries)

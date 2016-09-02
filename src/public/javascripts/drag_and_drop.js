@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var source;
 
   var taskListItems = document.querySelectorAll('.task-list-item')
-  console.log(taskListItems);
+
 
   function getDraggableTarget(event){
     var target = event.target
@@ -32,16 +32,13 @@ document.addEventListener('DOMContentLoaded', function(){
     else {
       target.parentNode.insertBefore(source, target.nextSibling);
     }
-    // console.log('dragenter');
   }
   var dragstart = function(event){
     source = event.target;
     event.dataTransfer.effectAllowed = 'move';
-    // console.log('dragstart');
   }
   var dragend = function(event){
     event.preventDefault()
-    // console.log('dragend');
     saveTaskRanks()
   }
 
@@ -51,12 +48,10 @@ document.addEventListener('DOMContentLoaded', function(){
       var node = $(this)
       newRanks[node.data('task-id')] = index
     })
-    console.log(newRanks)
     $.post('/tasks/set-ranks', newRanks)
   }
 
   ;[].forEach.call(taskListItems, function(taskListItem){
-    console.log(taskListItem);
     taskListItem.draggable = true
     taskListItem.addEventListener('dragenter', dragenter, false)
     taskListItem.addEventListener('dragstart', dragstart, false)
