@@ -105,6 +105,18 @@ router.get('/tasks/:taskId/delete', (req, res) => {
     })
 })
 
+// router.get('/users/:user.id/delete', (req, res) => {
+//   database.deleteUser(req.params.userId)
+//     .then(() => {
+//       res.redirect('/')
+//     })
+//     .catch(error => {
+//       res.render('error', {
+//         error: error,
+//       })
+//     })
+// })
+
 router.get('/tasks/:taskId/uncomplete', (req, res) => {
   database.uncompleteTask(req.params.taskId)
     .then(() => {

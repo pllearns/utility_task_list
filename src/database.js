@@ -43,6 +43,18 @@ const authenticateUser = (email, password) => {
     })
 }
 
+const deleteUser = (userId) => {
+  const sql = `
+  DELETE FROM
+    users
+    *
+  WHERE
+    id=$1
+  `
+  const variables = [userId]
+  return db.none(sql, variables)
+}
+
 const getNextRank = (userId) => {
   const sql = `
     SELECT
@@ -163,5 +175,6 @@ module.exports = {
   deleteTask: deleteTask,
   completeTask: completeTask,
   uncompleteTask: uncompleteTask,
-  updateTask: updateTask
+  updateTask: updateTask,
+  deleteUser: deleteUser
 }
