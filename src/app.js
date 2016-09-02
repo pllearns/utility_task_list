@@ -62,6 +62,7 @@ app.use('/users', routes)
 app.get('/signup', routes)
 app.post('/signup', routes)
 app.delete('/tasks/:id', routes)
+  // app.delete('/users/:id', routes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
