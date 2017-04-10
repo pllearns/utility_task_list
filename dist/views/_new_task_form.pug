@@ -1,0 +1,12 @@
+form.form-inline(method="post" action="/tasks")
+	input(type="hidden" name="list" value=list)
+	input(type="hidden" name="task[is_work]" value=(list === 'work' ? 'true' : 'false'))
+	.form-group
+		input(type="text" name="task[task]" value=newTask.task placeholder="your taskr")
+	.form-group
+		input(type="text" name="task[sub_task]" value=newTask.sub_task placeholder="why?")
+	.form-group
+		label by when?
+		input(type="date" name="task[due_date]" value=newTask.due_date placeholder="by when?")
+	div
+		input(type="submit", value="Start Taskr")

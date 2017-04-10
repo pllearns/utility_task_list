@@ -1,0 +1,44 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+/*.content {
+  position: relative;;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}*/
+
+.container {
+  display: table;
+  vertical-align: middle;
+}
+/*
+.vertical-center-row {
+  display: table-cell;
+  vertical-align: middle;
+}*/
+
+ol,ul{
+  margin: 0;
+}
+
+.form-group {
+  padding: 2px;
+}
+
+.user-avatar{
+  margin-top: 5px;
+  height: 40px;
+  width: 40px;
+}
+
+
+.task-list-item-title{
+  margin-left: 1em;
+  border: 0px;
+}
+.task-list-item-title:active,
+.task-list-item-title:focus{
+  background-color: lightblue;
+}

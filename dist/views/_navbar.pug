@@ -1,0 +1,18 @@
+nav.navbar.navbar-default
+	.container-fluid
+		.navbar-header
+			a.navbar-brand(href='#') TASKR
+		ol.pull-right.list-inline
+			li
+				= currentUser.email
+			li
+				a.btn.btn-default.btn-sm(href='/logout') Logout
+			li
+				a(href="")
+					img.user-avatar(src=currentUser.avatar_url)
+
+
+.btn-group
+	a.btn.btn-default.btn-sm(href="/work") Work
+	a.btn.btn-default.btn-sm(href="/") All
+	a.btn.btn-default.btn-sm(href="/personal") Personal

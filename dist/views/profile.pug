@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	script(src='/javascripts/drag_and_drop.js')
+
+	include ./_navbar
+
+	h1 #{list} tasks
+		.pull-right
+		p=currentUser.bio
+
+
+	for task in tasks
+		form.row.task-list-item(method='post' action='/tasks/'+task.id data-task-id=task.id)
+			.col-sm-4
+				if task.is_complete
+					input.checkbox-link(name=Math.random() type='checkbox' data-href="/tasks/"+task.id+"/uncomplete?list="+list checked='checked')
+				else
+					input.checkbox-link(type='checkbox' data-href="/tasks/"+task.id+"/complete?list="+list)
+				input.task-list-item-title(type='text' value=task.task name='task[task]')
+			.col-sm-3
+				= task.sub_task
+			.col-sm-2
+				.small=humanizeDate(task.due_date)
+			.col-sm-1
+				a.btn.btn-default.btn-sm.form-group(href="/tasks/"+task.id+"/delete") DELETE
+			.col-sm-1
+				div
+				span.glyphicon.glyphicon-align-justify(aria-hidden='true')
+	hr
+	include ./_new_task_form
